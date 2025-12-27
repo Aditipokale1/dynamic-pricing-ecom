@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Data / outputs (large files)
+data/*.db
+data/*.csv
+data/*.parquet
+dashboards/exports/*.csv
+
+# Models / artifacts
+models/
+*.pkl
+*.joblib
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

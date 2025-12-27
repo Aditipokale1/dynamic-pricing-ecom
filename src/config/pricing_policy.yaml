@@ -1,0 +1,48 @@
+policy_version: "1.0"
+
+decision_frequency: "daily"
+decision_unit: "sku_segment_day"
+
+objective:
+  type: "expected_profit"
+  margin_floor_pct: 0.20
+
+guardrails:
+  price_floor:
+    enabled: true
+    type: "cost_plus_margin"
+    min_margin_pct: 0.20
+    allow_below_floor_when_promo: true
+
+  price_ceiling:
+    enabled: true
+    type: "msrp"
+    enforce_map: true
+
+  max_daily_change:
+    enabled: true
+    default_pct: 0.10
+    low_stock_pct: 0.05
+    overstock_pct: 0.20  # only for downward changes
+
+  promo:
+    enabled: true
+    lock_price_when_active: true
+
+  competitor:
+    enabled: true
+    apply_to_kvi_only: true
+    max_over_competitor_pct: 0.03
+
+  trust:
+    enabled: true
+    window_days: 7
+    max_large_changes: 3
+    large_change_threshold_pct: 0.05
+
+inventory_flags:
+  low_stock_days_of_cover_lt: 7
+  overstock_days_of_cover_gt: 45
+
+kvi_definition:
+  method: "flag_in_dim_sku"
