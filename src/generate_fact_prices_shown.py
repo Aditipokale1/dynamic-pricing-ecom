@@ -30,7 +30,6 @@ def fetch_dates(conn):
     return cur.fetchall()
 
 def round_price(p: float) -> float:
-    # keep it simple for now (we'll do .99 endings later)
     return round(p, 2)
 
 def softmax(scores):
@@ -73,7 +72,7 @@ def main(seed: int = 2025):
                     promo_price = max(unit_cost * 1.05, msrp * rng.uniform(0.65, 0.90))
 
                 for seg in segments:
-                    # create multiplier probabilities influenced by segment + KVI (KVI slightly lower prices)
+                    # creating multiplier probabilities influenced by segment + KVI (KVI slightly lower prices)
                     seg_bias = SEGMENT_PRICE_PREF.get(seg, 0.0)
                     kvi_bias = -0.02 if is_kvi == 1 else 0.0
 

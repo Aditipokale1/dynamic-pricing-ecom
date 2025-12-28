@@ -38,7 +38,7 @@ def train_model():
     return model, list(X.columns)
 
 def fetch_one_valid_row(conn):
-    # Take one row from the last day for a KVI if possible
+    # Taking one row from the last day for a KVI if possible
     cur = conn.cursor()
     cur.execute("""
         SELECT f.sku_id, f.segment_id, f.date
@@ -99,11 +99,10 @@ def fetch_context_and_features(conn, sku_id, segment_id, date_str):
     }
 
 def make_model_features(features_df: pd.DataFrame, feature_cols: list):
-    # drop ids + target-like columns if present
     drop = {"sku_id", "segment_id", "date"}
     X = features_df.drop(columns=[c for c in drop if c in features_df.columns]).copy()
 
-    # remove labels if they exist
+    # removing labels if they exist
     for lbl in ["orders", "units_sold", "revenue", "profit"]:
         if lbl in X.columns:
             X = X.drop(columns=[lbl])
@@ -112,7 +111,7 @@ def make_model_features(features_df: pd.DataFrame, feature_cols: list):
     for c in X.columns:
         X[c] = pd.to_numeric(X[c], errors="coerce").fillna(0)
 
-    # align to training columns
+    # aligning to training columns
     X = X.reindex(columns=feature_cols, fill_value=0)
     return X
 

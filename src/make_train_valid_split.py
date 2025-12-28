@@ -18,7 +18,7 @@ def main():
         if max_date is None:
             raise ValueError("feature_sku_segment_day is empty")
 
-        # Find split date = max_date - VALID_DAYS + 1 (inclusive window)
+        # Finding split date = max_date - VALID_DAYS + 1 (inclusive window)
         # SQLite date arithmetic:
         split_date = cur.execute(
             "SELECT date(?, '-' || ? || ' days')",
@@ -37,7 +37,7 @@ def main():
             ORDER BY date
         """, (split_date,))
 
-        # Write header + rows manually
+        # Writing header + rows manually
         colnames = [d[0] for d in train_rows.description]
         OUT_TRAIN.parent.mkdir(parents=True, exist_ok=True)
 
@@ -46,7 +46,7 @@ def main():
             for row in train_rows:
                 f.write(",".join("" if v is None else str(v) for v in row) + "\n")
 
-        # Export valid
+        # Exporting valid
         valid_rows = cur.execute("""
             SELECT *
             FROM feature_sku_segment_day
@@ -59,12 +59,12 @@ def main():
             for row in valid_rows:
                 f.write(",".join("" if v is None else str(v) for v in row) + "\n")
 
-        # Print counts
+        # Printing counts
         n_train = cur.execute("SELECT COUNT(*) FROM feature_sku_segment_day WHERE date < ?", (split_date,)).fetchone()[0]
         n_valid = cur.execute("SELECT COUNT(*) FROM feature_sku_segment_day WHERE date >= ?", (split_date,)).fetchone()[0]
-        print(f"✅ Train rows: {n_train}")
-        print(f"✅ Valid rows: {n_valid}")
-        print(f"✅ Wrote: {OUT_TRAIN} and {OUT_VALID}")
+        print(f" Train rows: {n_train}")
+        print(f" Valid rows: {n_valid}")
+        print(f" Wrote: {OUT_TRAIN} and {OUT_VALID}")
 
     finally:
         conn.close()

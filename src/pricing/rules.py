@@ -111,7 +111,6 @@ def apply_guardrails(candidate_price: float, ctx: Context, policy: dict) -> Rule
             reasons.append("MAX_DAILY_CHANGE_CLAMPED")
         p = p2
 
-    # 5) Competitor cap (KVI only)
     comp_cfg = policy["guardrails"]["competitor"]
     if comp_cfg["enabled"] and ctx.is_kvi and ctx.competitor_price is not None:
         cap = float(ctx.competitor_price) * (1.0 + float(comp_cfg["max_over_competitor_pct"]))
@@ -119,11 +118,8 @@ def apply_guardrails(candidate_price: float, ctx: Context, policy: dict) -> Rule
             p = cap
             reasons.append("COMPETITOR_CAP_APPLIED")
 
-    # 6) Trust constraint (weekly volatility) — placeholder for later phases
     trust_cfg = policy["guardrails"]["trust"]
     if trust_cfg["enabled"] and ctx.recent_prices:
-        # Implement in later phases when you have reliable historical price series
-        # Example future reason: "TRUST_VOLATILITY_LIMIT_APPLIED"
         pass
 
     if p <= 0:

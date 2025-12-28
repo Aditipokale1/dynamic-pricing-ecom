@@ -23,7 +23,7 @@ def check_no_duplicates(conn):
         dupes = scalar(conn, q)
         if dupes != 0:
             raise AssertionError(f"❌ {name}: found {dupes} duplicate-grain rows")
-    print("✅ No duplicate-grain rows")
+    print(" No duplicate-grain rows")
 
 def check_ranges(conn):
     bad_price = scalar(conn, "SELECT COUNT(*) FROM fact_prices_shown WHERE price_shown <= 0")
@@ -46,7 +46,7 @@ def check_ranges(conn):
     if neg_sessions != 0:
         raise AssertionError(f"❌ negative traffic rows: {neg_sessions}")
 
-    print("✅ Range checks passed")
+    print(" Range checks passed")
 
 def check_competitor_missing_rate(conn, threshold: float = 0.10):
     total = scalar(conn, "SELECT COUNT(*) FROM fact_prices_shown")
@@ -54,7 +54,7 @@ def check_competitor_missing_rate(conn, threshold: float = 0.10):
     rate = missing / total if total else 0.0
     if rate > threshold:
         raise AssertionError(f"❌ competitor_price missing rate {rate:.3%} > {threshold:.0%}")
-    print(f"✅ competitor_price missing rate: {rate:.3%}")
+    print(f" competitor_price missing rate: {rate:.3%}")
 
 def check_abrupt_traffic_spikes(conn, spike_multiplier: float = 20.0):
     """
@@ -76,9 +76,9 @@ def check_abrupt_traffic_spikes(conn, spike_multiplier: float = 20.0):
             flagged += 1
 
     if flagged > 0:
-        print(f"⚠️  Spike check: flagged {flagged} sku-segments with extreme session spikes")
+        print(f"  Spike check: flagged {flagged} sku-segments with extreme session spikes")
     else:
-        print("✅ Spike check passed (no extreme spikes)")
+        print(" Spike check passed (no extreme spikes)")
 
 
 def main():
@@ -89,7 +89,7 @@ def main():
         check_ranges(conn)
         check_competitor_missing_rate(conn, threshold=0.10)
         check_abrupt_traffic_spikes(conn, spike_multiplier=20.0)
-        print("✅ All validation checks completed")
+        print(" All validation checks completed")
     finally:
         conn.close()
 

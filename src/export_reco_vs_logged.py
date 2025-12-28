@@ -39,7 +39,7 @@ def main():
             w.writerow(cols)
             w.writerows(rows)
 
-        print(f"✅ Wrote {OUT} ({len(rows)} rows)")
+        print(f" Wrote {OUT} ({len(rows)} rows)")
     finally:
         conn.close()
 

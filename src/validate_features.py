@@ -58,7 +58,7 @@ def main():
         """).fetchone()[0]
         print(f"price_shown <= 0: {bad_price}")
 
-        print("✅ Feature validation done")
+        print(" Feature validation done")
     finally:
         conn.close()
 

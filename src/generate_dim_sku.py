@@ -48,20 +48,19 @@ def generate_skus(n: int = 600, seed: int = 42):
 
         msrp = unit_cost * markup
 
-        # MAP: sometimes present (esp electronics), usually below MSRP but above cost
         map_price = None
         if category == "electronics" and rng.random() < 0.55:
             map_price = max(unit_cost * 1.15, msrp * rng.uniform(0.75, 0.90))
         elif rng.random() < 0.10:
             map_price = max(unit_cost * 1.10, msrp * rng.uniform(0.70, 0.92))
 
-        # KVI flag: ~15% of SKUs are key items
+        # KVI flag
         is_kvi = 1 if rng.random() < 0.15 else 0
 
         sku_id = f"{category[:4].upper()}-{i:04d}"
         launch_date = rand_launch_date(rng)
 
-        # Round money values to 2 decimals
+        # Rounding money values to 2 decimals
         unit_cost = round(unit_cost, 2)
         msrp = round(msrp, 2)
         if map_price is not None:
@@ -86,7 +85,7 @@ def main():
             rows
         )
         conn.commit()
-        print(f"✅ Inserted {len(rows)} rows into dim_sku")
+        print(f" Inserted {len(rows)} rows into dim_sku")
     finally:
         conn.close()
 

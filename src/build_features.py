@@ -20,12 +20,12 @@ def main():
     try:
         cur = conn.cursor()
 
-        # 1) Create feature table
+        # Creating feature table
         schema_sql = FEATURE_SCHEMA_PATH.read_text(encoding="utf-8")
         conn.executescript(schema_sql)
         conn.commit()
 
-        # 2) Pull base joined rows ordered for lag/rolling calcs
+        # Pulling base joined rows ordered for lag/rolling calcs
         cur.execute("""
             SELECT
               t.sku_id, t.segment_id, t.date,
@@ -44,7 +44,7 @@ def main():
         """)
         rows = cur.fetchall()
 
-        # 3) Build features with lags/rolling windows per SKU×segment
+        # Building features with lags/rolling windows per SKU×segment
         out = []
         last_price = None
         last_sessions = None
@@ -116,7 +116,7 @@ def main():
             last_price = price_shown
             last_sessions = sessions
 
-        # 4) Write to DB (replace)
+        # Writing to DB 
         conn.execute("DELETE FROM feature_sku_segment_day;")
         conn.executemany(
             """
@@ -134,7 +134,7 @@ def main():
             out
         )
         conn.commit()
-        print(f"✅ Built feature_sku_segment_day with {len(out)} rows")
+        print(f" Built feature_sku_segment_day with {len(out)} rows")
     finally:
         conn.close()
 

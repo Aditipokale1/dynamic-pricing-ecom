@@ -17,7 +17,7 @@ def main():
     try:
         cur = conn.cursor()
 
-        # create summary table
+        # creating summary table
         conn.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
         conn.commit()
 
@@ -97,7 +97,7 @@ def main():
         """, row)
         conn.commit()
 
-        print(f"✅ Built pricing_run_summary for {run_date}")
+        print(f" Built pricing_run_summary for {run_date}")
         print(f"  n={n}, avg_price={avg_price:.2f}, total_exp_profit={total_profit:.2f}")
 
     finally:

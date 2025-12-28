@@ -40,7 +40,7 @@ def train_units_model_no_leak() -> tuple[HistGradientBoostingRegressor, list[str
     y = train[TARGET].astype(float)
     X = train.drop(columns=[TARGET] + ID_COLS, errors="ignore")
 
-    # remove label leakage columns if present
+    # removing label leakage columns if present
     X = X.drop(columns=[c for c in LABEL_LEAK_COLS if c in X.columns], errors="ignore")
 
     X = X.fillna(0)
@@ -185,7 +185,7 @@ def main():
                 ruled = apply_guardrails(raw_candidate, ctx, policy)
                 final_price = float(ruled.final_price)
 
-                # Build candidate feature row based on existing feature fields (not labels)
+                # Building candidate feature row based on existing feature fields (not labels)
                 base_features = {
                     # price features
                     "price_shown": final_price,
@@ -250,7 +250,7 @@ def main():
         )
         conn.commit()
 
-        print(f"✅ Wrote {len(inserts)} recommendations into pricing_recommendations for {run_date}")
+        print(f" Wrote {len(inserts)} recommendations into pricing_recommendations for {run_date}")
 
     finally:
         conn.close()

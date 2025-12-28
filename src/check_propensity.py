@@ -29,7 +29,7 @@ def main():
         print(f"  max:  {mx:.6f}")
         print(f"  nulls: {nulls}, <=0: {nonpos}, >1: {gt1}")
 
-        # Approx bucket usage: compare price_shown / msrp, rounded to nearest 0.05
+        # Approx bucket usage: comparing price_shown / msrp, rounded to nearest 0.05
         cur.execute("""
             SELECT
               ROUND((p.price_shown / s.msrp) * 20.0) / 20.0 AS approx_mult,

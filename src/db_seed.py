@@ -79,7 +79,7 @@ def main():
         seed_calendar(conn, start=start, end=today)
 
         conn.commit()
-        print(f"✅ Seeded dim_segment and dim_calendar for {start.isoformat()} to {today.isoformat()}")
+        print(f" Seeded dim_segment and dim_calendar for {start.isoformat()} to {today.isoformat()}")
     finally:
         conn.close()
 

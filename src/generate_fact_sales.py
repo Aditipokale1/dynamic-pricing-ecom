@@ -103,7 +103,7 @@ def main(seed: int = 7):
                 # add-to-cart provides extra intent signal
                 intent = 0.15 * math.log(1 + add_to_cart)
 
-                # Build a probability around base_cvr but bounded
+                # Building a probability around base_cvr but bounded
                 # We map (logit(base) + effects) -> sigmoid
                 base_logit = math.log(base_cvr / (1 - base_cvr))
                 logit = base_logit + price_effect + comp_effect + promo_effect + intent
@@ -153,7 +153,7 @@ def main(seed: int = 7):
             out_rows
         )
         conn.commit()
-        print(f"✅ Inserted {len(out_rows)} rows into fact_sales")
+        print(f" Inserted {len(out_rows)} rows into fact_sales")
     finally:
         conn.close()
 

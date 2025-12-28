@@ -12,7 +12,6 @@ def load_policy(path: str = "src/config/pricing_policy.yaml") -> dict:
 def main():
     policy = load_policy()
 
-    # Example: a Key Value Item (KVI) with competitor pressure
     ctx = Context(
         sku="ELEC-001",
         segment="new",

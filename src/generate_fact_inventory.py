@@ -37,7 +37,7 @@ def main(seed: int = 123):
         dates = fetch_dates(conn)
 
         rows = []
-        # track recent sales proxy for DOC estimate
+        # tracking recent sales proxy for DOC estimate
         rolling_sales = defaultdict(list)  # sku_id -> list of last 7 "demand" draws
 
         for sku_id, category in skus:
@@ -49,7 +49,7 @@ def main(seed: int = 123):
             else:
                 on_hand = rng.randint(30, 200)
 
-            # restock cadence: every 7-21 days
+            # restocking cadence: every 7-21 days
             restock_every = rng.randint(7, 21)
             next_restock_idx = rng.randint(0, restock_every - 1)
 
@@ -72,15 +72,13 @@ def main(seed: int = 123):
                     next_restock_idx += restock_every
                     restock_every = rng.randint(7, 21)  # vary cadence
 
-                # demand draw (proxy; actual sales will be generated later)
-                # use poisson-like: sum of Bernoulli as quick integer approx
                 demand = 0
                 trials = int(demand_mu * 6) + 1
                 p = min(0.7, demand_mu / max(1, trials))
                 for _ in range(trials):
                     demand += 1 if rng.random() < p else 0
 
-                # fulfill demand from on_hand
+                # fulfilling demand from on_hand
                 fulfilled = min(on_hand, demand)
                 on_hand -= fulfilled
 
