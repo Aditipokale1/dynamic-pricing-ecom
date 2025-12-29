@@ -1,10 +1,13 @@
-# Dynamic Pricing for Mid-Size E-Commerce (SKU × Segment × Day)
+## Dynamic Pricing (E-Commerce)
 
-## Overview
-This project builds an end-to-end dynamic pricing system for a mid-size e-commerce retailer:
-- Scale: 600 SKUs × 4 customer segments × daily decisions
-- Objective: maximize expected profit with business guardrails
-- Output: daily recommended prices + reason codes + monitoring dashboard
+This project builds an end-to-end dynamic pricing workflow that generates daily price recommendations for e-commerce products.  
+It combines demand/profit modeling with practical business guardrails and produces **audit-friendly reason codes** and **monitoring outputs** to support repeatable, stakeholder-ready pricing decisions.
+
+### Key highlights
+- **Pricing recommendations** at SKU (and/or segment) level
+- **Guardrails** (e.g., min margin, max day-over-day change, competitor/MAP caps, inventory-aware overrides)
+- **Reason codes** explaining *why* a price was recommended
+- **Monitoring layer** (exports/tables for dashboards) to track performance and recommendation behavior
 
 ## Dashboard preview
 ![Dashboard Page 1](docs/screenshots/dashboard_page1.png)
